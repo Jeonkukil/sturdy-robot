@@ -1,5 +1,8 @@
 package shop.mtcoding.momo.util;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -7,6 +10,25 @@ import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
 
 public class HtmlParseTest {
+
+    @Test
+    public void mo() throws Exception {
+
+        String url = "http://www.cgv.co.kr/movies/?lt=1&ft=0";
+        Document doc = null;
+
+        doc = Jsoup.connect("http://www.cgv.co.kr/movies/?lt=1&ft=0").get();
+
+        Elements el = doc.select("div.box-contents strong.title");
+        Element el1 = el.get(0);
+
+        String el2 = el1.text();
+        // Element el2 = el1.text();
+        for (int i = 0; i < el.size(); i++) {
+            String el4 = el.get(i).text();
+            System.out.println(el4);
+        }
+    }
 
     @Test
     public void jsoup_test1() throws Exception {

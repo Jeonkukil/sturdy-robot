@@ -26,19 +26,7 @@ public class BoardService {
     // where 절에 걸리는 파라미터를 앞에 받기
     @Transactional
     public int 글쓰기(BoardSaveReqDto boardSaveReqDto, int userId) {
-        // 1. content 내용을 Document로 받고 , img 찾아내서(0,1,2) src를찾아서 thumbnail에 추가
-        String thumbnail = "";
-        String a = boardSaveReqDto.getContent();
-        Document doc = Jsoup.parse(a);
-        Elements els = doc.select("img");
-        if (els.size() == 0) {
-            thumbnail = "/images/profile.jfif";
-            boardSaveReqDto.setThumbnail(thumbnail);
-        } else {
-            Element el = els.get(0);
-            thumbnail = el.attr("src");
-            boardSaveReqDto.setThumbnail(thumbnail);
-        }
+        HtmlParser(boardSaveReqDto.getThumbnail());
 
         int result = boardRepository.insert(
                 boardSaveReqDto.getTitle(),
@@ -46,7 +34,7 @@ public class BoardService {
                 boardSaveReqDto.getThumbnail(),
                 userId);
         if (result != 1) {
-            throw new CustomException("글쓰기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new CustomApiException("글쓰기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return 1;
     }
@@ -75,7 +63,7 @@ public class BoardService {
         Document doc = Jsoup.parse(a);
         Elements els = doc.select("img");
         if (els.size() == 0) {
-            thumbnail = "/images/profile.jfif";
+            thumbnail = "/images/cat.jpg";
             boardUpdateReqDto.setThumbnail(thumbnail);
         } else {
             Element el = els.get(0);

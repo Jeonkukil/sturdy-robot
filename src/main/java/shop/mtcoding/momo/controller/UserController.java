@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import shop.mtcoding.momo.dto.user.UserReq.JoinReqDto;
 import shop.mtcoding.momo.dto.user.UserReq.LoginReqDto;
@@ -23,7 +24,9 @@ public class UserController {
     private HttpSession session;
 
     @PostMapping("/join")
+
     public String join(JoinReqDto joinReqDto) {
+
         if (joinReqDto.getUsername() == null || joinReqDto.getUsername().isEmpty()) {
             throw new CustomException("username을 작성해주세요");
         }
@@ -72,4 +75,5 @@ public class UserController {
         session.invalidate();
         return "redirect:/";
     }
+
 }
